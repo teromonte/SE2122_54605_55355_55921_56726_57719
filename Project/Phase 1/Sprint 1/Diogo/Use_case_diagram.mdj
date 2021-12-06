@@ -27,7 +27,7 @@
 								"$ref": "AAAAAAFF+qBtyKM79qY="
 							},
 							"font": "Arial;13;0",
-							"left": 632,
+							"left": 640,
 							"top": 200,
 							"width": 368,
 							"height": 432
@@ -264,61 +264,11 @@
 								"$ref": "AAAAAAFF+qBtyKM79qY="
 							},
 							"font": "Arial;13;0",
-							"left": 720,
-							"top": 344,
-							"width": 60,
-							"height": 38,
-							"text": "Rename files"
-						},
-						{
-							"_type": "EllipseView",
-							"_id": "AAAAAAF9jJEDiCJihpk=",
-							"_parent": {
-								"$ref": "AAAAAAFF+qBtyKM79qY="
-							},
-							"font": "Arial;13;0",
-							"left": 696,
-							"top": 400,
-							"width": 72,
-							"height": 50
-						},
-						{
-							"_type": "UMLTextView",
-							"_id": "AAAAAAF9jJERyCJluMA=",
-							"_parent": {
-								"$ref": "AAAAAAFF+qBtyKM79qY="
-							},
-							"font": "Arial;13;0",
-							"left": 704,
-							"top": 408,
-							"width": 60,
-							"height": 38,
-							"text": "Move files"
-						},
-						{
-							"_type": "EllipseView",
-							"_id": "AAAAAAF9jJFIiCJpFnI=",
-							"_parent": {
-								"$ref": "AAAAAAFF+qBtyKM79qY="
-							},
-							"font": "Arial;13;0",
-							"left": 688,
-							"top": 464,
-							"width": 129,
-							"height": 33
-						},
-						{
-							"_type": "UMLTextView",
-							"_id": "AAAAAAF9jJFTFSJsgXI=",
-							"_parent": {
-								"$ref": "AAAAAAFF+qBtyKM79qY="
-							},
-							"font": "Arial;13;0",
 							"left": 712,
-							"top": 472,
-							"width": 104,
-							"height": 40,
-							"text": "Change files"
+							"top": 344,
+							"width": 71.4072265625,
+							"height": 38,
+							"text": "Costumize rules"
 						},
 						{
 							"_type": "FreelineEdgeView",
@@ -329,26 +279,6 @@
 							"font": "Arial;13;0",
 							"lineStyle": 1,
 							"points": "512:392;706:364"
-						},
-						{
-							"_type": "FreelineEdgeView",
-							"_id": "AAAAAAF9jJHLnSJ1oWw=",
-							"_parent": {
-								"$ref": "AAAAAAFF+qBtyKM79qY="
-							},
-							"font": "Arial;13;0",
-							"lineStyle": 1,
-							"points": "504:400;699:420"
-						},
-						{
-							"_type": "FreelineEdgeView",
-							"_id": "AAAAAAF9jJHV6SJ4ncI=",
-							"_parent": {
-								"$ref": "AAAAAAFF+qBtyKM79qY="
-							},
-							"font": "Arial;13;0",
-							"lineStyle": 1,
-							"points": "504:424;697:476"
 						}
 					]
 				}
