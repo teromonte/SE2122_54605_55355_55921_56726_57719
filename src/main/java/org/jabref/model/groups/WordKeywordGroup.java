@@ -142,7 +142,7 @@ public class WordKeywordGroup extends KeywordGroup implements GroupEntryChanger 
     }
 
     class StringSearchStrategy implements SearchStrategy {
-        Set<String> searchWords;
+        Set<Strin   g> searchWords;
 
         StringSearchStrategy() {
             searchWords = new HashSet<>(StringUtil.getStringAsWords(searchExpression));
