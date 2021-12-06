@@ -40,9 +40,9 @@
 							},
 							"font": "Arial;13;0",
 							"left": 416,
-							"top": 312,
+							"top": 344,
 							"width": 65,
-							"height": 57
+							"height": 25
 						},
 						{
 							"_type": "FreelineEdgeView",
