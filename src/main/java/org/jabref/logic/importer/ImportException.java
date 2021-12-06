@@ -16,3 +16,4 @@ public class ImportException extends JabRefException {
         super(cause);
     }
 }
+
