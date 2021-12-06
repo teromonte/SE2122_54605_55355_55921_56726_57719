@@ -59,7 +59,7 @@ open module org.jabref {
     // Libre Office
     requires org.libreoffice.uno;
 
-    // Other modules
+    // Other moduleimpor
     requires commons.logging;
     requires com.google.common;
     requires jakarta.inject;
