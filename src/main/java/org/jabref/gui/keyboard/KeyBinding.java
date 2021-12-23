@@ -94,8 +94,13 @@ public enum KeyBinding {
     RESOLVE_DUPLICATE_CITATION_KEYS("Resolve duplicate citation keys", Localization.lang("Resolve duplicate citation keys"), "ctrl+shift+D", KeyBindingCategory.BIBTEX),
     SAVE_ALL("Save all", Localization.lang("Save all"), "ctrl+alt+S", KeyBindingCategory.FILE),
     SAVE_DATABASE("Save library", Localization.lang("Save library"), "ctrl+S", KeyBindingCategory.FILE),
+
     SAVE_DATABASE_AS("Save library as ...", Localization.lang("Save library as..."), "ctrl+shift+S", KeyBindingCategory.FILE),
+
     SEARCH("Search", Localization.lang("Search"), "ctrl+F", KeyBindingCategory.SEARCH),
+
+    SEARCH_AUTHOR("Search Author",Localization.lang("Search Author"),"ctrl+alt+shift+s",KeyBindingCategory.SEARCH),
+
     SELECT_ALL("Select all", Localization.lang("Select all"), "ctrl+A", KeyBindingCategory.EDIT),
     SELECT_FIRST_ENTRY("Select first entry", Localization.lang("Select first entry"), "HOME", KeyBindingCategory.EDIT),
     SELECT_LAST_ENTRY("Select last entry", Localization.lang("Select last entry"), "END", KeyBindingCategory.EDIT),

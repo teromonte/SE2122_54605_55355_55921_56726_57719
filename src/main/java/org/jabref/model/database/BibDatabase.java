@@ -1,26 +1,9 @@
 package org.jabref.model.database;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import org.jabref.model.database.event.EntriesAddedEvent;
 import org.jabref.model.database.event.EntriesRemovedEvent;
 import org.jabref.model.entry.BibEntry;
@@ -33,22 +16,26 @@ import org.jabref.model.entry.field.Field;
 import org.jabref.model.entry.field.FieldFactory;
 import org.jabref.model.entry.field.StandardField;
 import org.jabref.model.strings.StringUtil;
-
-import com.google.common.eventbus.EventBus;
-import com.google.common.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * A bibliography database. This is the "bib" file (or the library stored in a shared SQL database)
  */
 public class BibDatabase {
-
+    // TOdas as entries , calcular aqui os autores de todos os bibEntrys
     private static final Logger LOGGER = LoggerFactory.getLogger(BibDatabase.class);
     private static final Pattern RESOLVE_CONTENT_PATTERN = Pattern.compile(".*#[^#]+#.*");
 
     /**
-     * State attributes
+     * State attributes , entries são todos os artigos.
      */
     private final ObservableList<BibEntry> entries = FXCollections.synchronizedObservableList(FXCollections.observableArrayList(BibEntry::getObservables));
     private Map<String, BibtexString> bibtexStrings = new ConcurrentHashMap<>();
@@ -67,15 +54,30 @@ public class BibDatabase {
     public BibDatabase(List<BibEntry> entries, String newLineSeparator) {
         this(entries);
         this.newLineSeparator = newLineSeparator;
+        System.out.println("first");
+
     }
 
     public BibDatabase(List<BibEntry> entries) {
         this();
         insertEntries(entries);
+        System.out.println("second");
     }
 
     public BibDatabase() {
         this.registerListener(new KeyChangeListener(this));
+        System.out.println("third");
+        System.out.println("entries");
+        for(BibEntry i: entries){
+            System.out.println();
+            System.out.println(i);
+        }
+        System.out.println("map entries");
+        for(Map.Entry<String, BibtexString> i : bibtexStrings.entrySet()){
+            System.out.println(i.getKey());
+            System.out.println(i.getValue());
+        }
+
     }
 
     /**

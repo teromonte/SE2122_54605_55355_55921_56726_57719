@@ -1,10 +1,9 @@
 package org.jabref.model.entry;
 
-import java.util.Objects;
-import java.util.Optional;
-
 import org.jabref.model.strings.LatexToUnicodeAdapter;
 import org.jabref.model.strings.StringUtil;
+
+import java.util.*;
 
 /**
  * This is an immutable class that keeps information regarding single author. It is just a container for the information, with very simple methods to access it.
@@ -18,6 +17,7 @@ public class Author {
     private final String lastPart;
     private final String jrPart;
     private Author latexFreeAuthor;
+    private Map<Integer,Author> coauthor;
 
     /**
      * Creates the Author object. If any part of the name is absent, <CODE>null</CODE> must be passed; otherwise other methods may return erroneous results.
@@ -34,6 +34,21 @@ public class Author {
         vonPart = removeStartAndEndBraces(von);
         lastPart = removeStartAndEndBraces(last);
         jrPart = removeStartAndEndBraces(jr);
+
+        Comparator<Integer> authorComparator = new Comparator<Integer>() {
+            public int compare(Integer o1, Integer o2) {
+                int comp = o1.compareTo(o2);
+                if(comp < 0)
+                    return 1;
+                else if( comp > 0)
+                    return -1;
+                else
+                    return 0;
+            }
+        };
+        coauthor = new TreeMap<Integer, Author>( authorComparator);
+
+        //Thread.sleep(100);
     }
 
     public static String addDotIfAbbreviation(String name) {

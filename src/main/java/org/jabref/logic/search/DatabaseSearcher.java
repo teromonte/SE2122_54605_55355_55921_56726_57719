@@ -1,16 +1,15 @@
 package org.jabref.logic.search;
 
+import org.jabref.model.database.BibDatabase;
+import org.jabref.model.database.BibDatabases;
+import org.jabref.model.entry.BibEntry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import org.jabref.model.database.BibDatabase;
-import org.jabref.model.database.BibDatabases;
-import org.jabref.model.entry.BibEntry;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class DatabaseSearcher {
 
@@ -21,6 +20,8 @@ public class DatabaseSearcher {
 
     public DatabaseSearcher(SearchQuery query, BibDatabase database) {
         this.query = Objects.requireNonNull(query);
+        System.out.println(query.getQuery());
+
         this.database = Objects.requireNonNull(database);
     }
 
