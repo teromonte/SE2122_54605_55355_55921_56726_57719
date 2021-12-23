@@ -68,6 +68,7 @@ import org.jabref.gui.preferences.ShowPreferencesAction;
 import org.jabref.gui.preview.CopyCitationAction;
 import org.jabref.gui.push.PushToApplicationAction;
 import org.jabref.gui.push.PushToApplicationsManager;
+//import org.jabref.gui.search.AuthorSearchBar;
 import org.jabref.gui.search.AuthorSearchBar;
 import org.jabref.gui.search.GlobalSearchBar;
 import org.jabref.gui.search.RebuildFulltextSearchIndexAction;
