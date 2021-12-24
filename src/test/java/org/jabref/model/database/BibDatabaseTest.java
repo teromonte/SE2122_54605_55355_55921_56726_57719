@@ -442,8 +442,18 @@ class BibDatabaseTest {
         database.addString(tripleA);
         database.addString(tripleB);
         database.insertEntry(entry);
+        System.out.println(tripleA.getName());
+        System.out.println(tripleA.getContent());
+        System.out.println(tripleB.getName());
+        System.out.println(tripleB.getContent());
 
         List<BibtexString> usedStrings = (List<BibtexString>) database.getUsedStrings(Arrays.asList(entry));
+        for(BibtexString b : usedStrings) {
+            System.out.println(b.getContent());
+            System.out.println(b.getName());
+
+        }
+
         assertEquals(strings, usedStrings);
     }
 

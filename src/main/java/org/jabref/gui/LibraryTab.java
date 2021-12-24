@@ -121,12 +121,13 @@ public class LibraryTab extends Tab {
         annotationCache = new FileAnnotationCache(bibDatabaseContext, preferencesService.getFilePreferences());
 
         setupMainPanel();
+
         setupAutoCompletion();
 
         this.getDatabase().registerListener(new SearchListener());
         this.getDatabase().registerListener(new IndexUpdateListener());
         this.getDatabase().registerListener(new EntriesRemovedListener());
-       // this.getDatabase().registerListener(new newSearchListener());
+        // this.getDatabase().registerListener(new newSearchListener());
 
         // ensure that at each addition of a new entry, the entry is added to the groups interface
         this.bibDatabaseContext.getDatabase().registerListener(new GroupTreeListener());
@@ -195,9 +196,9 @@ public class LibraryTab extends Tab {
         stateManager.activeDatabaseProperty().bind(
                 EasyBind.map(frame.getTabbedPane().getSelectionModel().selectedItemProperty(),
                         selectedTab -> Optional.ofNullable(selectedTab)
-                                               .filter(tab -> tab instanceof LibraryTab)
-                                               .map(tab -> (LibraryTab) tab)
-                                               .map(LibraryTab::getBibDatabaseContext)));
+                                .filter(tab -> tab instanceof LibraryTab)
+                                .map(tab -> (LibraryTab) tab)
+                                .map(LibraryTab::getBibDatabaseContext)));
     }
 
     public void onDatabaseLoadingFailed(Exception ex) {
@@ -332,10 +333,10 @@ public class LibraryTab extends Tab {
     private List<String> collectAllDatabasePaths() {
         List<String> list = new ArrayList<>();
         stateManager.getOpenDatabases().stream()
-                    .map(BibDatabaseContext::getDatabasePath)
-                    .forEachOrdered(pathOptional -> pathOptional.ifPresentOrElse(
-                            path -> list.add(path.toAbsolutePath().toString()),
-                            () -> list.add("")));
+                .map(BibDatabaseContext::getDatabasePath)
+                .forEachOrdered(pathOptional -> pathOptional.ifPresentOrElse(
+                        path -> list.add(path.toAbsolutePath().toString()),
+                        () -> list.add("")));
         return list;
     }
 
@@ -472,9 +473,9 @@ public class LibraryTab extends Tab {
 
         // Update entry editor and preview according to selected entries
         mainTable.addSelectionListener(event -> mainTable.getSelectedEntries()
-                                                         .stream()
-                                                         .findFirst()
-                                                         .ifPresent(entryEditor::setEntry));
+                .stream()
+                .findFirst()
+                .ifPresent(entryEditor::setEntry));
     }
 
     public void setupMainPanel() {
@@ -488,8 +489,8 @@ public class LibraryTab extends Tab {
         // Saves the divider position as soon as it changes
         // We need to keep a reference to the subscription, otherwise the binding gets garbage collected
         dividerPositionSubscription = EasyBind.valueAt(splitPane.getDividers(), 0)
-                                              .mapObservable(SplitPane.Divider::positionProperty)
-                                              .subscribeToValues(this::saveDividerLocation);
+                .mapObservable(SplitPane.Divider::positionProperty)
+                .subscribeToValues(this::saveDividerLocation);
 
         // Add changePane in case a file is present - otherwise just add the splitPane to the panel
         Optional<Path> file = bibDatabaseContext.getDatabasePath();
@@ -633,7 +634,6 @@ public class LibraryTab extends Tab {
             String message = Localization.lang("Really delete the selected entry?");
             String okButton = Localization.lang("Delete entry");
             String cancelButton = Localization.lang("Keep entry");
-            //String searchButton = Localization.lang("search name");
             if (numberOfEntries > 1) {
                 title = Localization.lang("Delete multiple entries");
                 message = Localization.lang("Really delete the %0 selected entries?", Integer.toString(numberOfEntries));
@@ -782,9 +782,9 @@ public class LibraryTab extends Tab {
             newTab.setDataLoadingTask(dataLoadingTask);
 
             dataLoadingTask.onRunning(newTab::onDatabaseLoadingStarted)
-                           .onSuccess(newTab::onDatabaseLoadingSucceed)
-                           .onFailure(newTab::onDatabaseLoadingFailed)
-                           .executeWith(Globals.TASK_EXECUTOR);
+                    .onSuccess(newTab::onDatabaseLoadingSucceed)
+                    .onFailure(newTab::onDatabaseLoadingFailed)
+                    .executeWith(Globals.TASK_EXECUTOR);
 
             return newTab;
         }

@@ -102,12 +102,6 @@ public class BibEntry implements Cloneable {
         this.id = IdGenerator.next();
         setType(type);
         this.sharedBibEntryData = new SharedBibEntryData();
-        for(Map.Entry<Field, Set<String>> e :fieldsAsWords.entrySet()){
-            System.out.println(e.getKey());
-            for(String s: e.getValue()){
-                System.out.println(s);
-            }
-        }
     }
 
     public Optional<FieldChange> setMonth(Month parsedMonth) {
@@ -663,6 +657,11 @@ public class BibEntry implements Cloneable {
             return text;
         }
         return text.substring(0, maxCharacters + 1) + "...";
+    }
+    public String getAuthors(){
+        String[] s = new String[]{getField(StandardField.AUTHOR).orElse("N/A")};
+        String text = s[0];
+        return text;
     }
 
     /**

@@ -54,30 +54,16 @@ public class BibDatabase {
     public BibDatabase(List<BibEntry> entries, String newLineSeparator) {
         this(entries);
         this.newLineSeparator = newLineSeparator;
-        System.out.println("first");
 
     }
 
     public BibDatabase(List<BibEntry> entries) {
         this();
         insertEntries(entries);
-        System.out.println("second");
     }
 
     public BibDatabase() {
         this.registerListener(new KeyChangeListener(this));
-        System.out.println("third");
-        System.out.println("entries");
-        for(BibEntry i: entries){
-            System.out.println();
-            System.out.println(i);
-        }
-        System.out.println("map entries");
-        for(Map.Entry<String, BibtexString> i : bibtexStrings.entrySet()){
-            System.out.println(i.getKey());
-            System.out.println(i.getValue());
-        }
-
     }
 
     /**
@@ -648,4 +634,7 @@ public class BibDatabase {
         return newLineSeparator;
     }
 
+    public Iterator<String> coAuthor(){
+        return new CoAuthorFilter(this.entries);
+    }
 }

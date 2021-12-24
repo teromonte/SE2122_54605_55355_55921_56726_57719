@@ -17,7 +17,6 @@ public class Author {
     private final String lastPart;
     private final String jrPart;
     private Author latexFreeAuthor;
-    private Map<Integer,Author> coauthor;
 
     /**
      * Creates the Author object. If any part of the name is absent, <CODE>null</CODE> must be passed; otherwise other methods may return erroneous results.
@@ -35,20 +34,12 @@ public class Author {
         lastPart = removeStartAndEndBraces(last);
         jrPart = removeStartAndEndBraces(jr);
 
-        Comparator<Integer> authorComparator = new Comparator<Integer>() {
-            public int compare(Integer o1, Integer o2) {
-                int comp = o1.compareTo(o2);
-                if(comp < 0)
-                    return 1;
-                else if( comp > 0)
-                    return -1;
-                else
-                    return 0;
+        Comparator<Author> authorComparator = new Comparator<Author>() {
+            public int compare(Author o1, Author o2) {
+                return o1.getFirst().toString().compareTo(o2.getFirst().toString());
             }
         };
-        coauthor = new TreeMap<Integer, Author>( authorComparator);
 
-        //Thread.sleep(100);
     }
 
     public static String addDotIfAbbreviation(String name) {

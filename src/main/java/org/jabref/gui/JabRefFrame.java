@@ -125,7 +125,6 @@ public class JabRefFrame extends BorderPane {
     private final SplitPane splitPane = new SplitPane();
     private final PreferencesService prefs = Globals.prefs;
     private final GlobalSearchBar globalSearchBar;
-    private final AuthorSearchBar authorSearchBar;
     private final FileHistoryMenu fileHistory;
 
     @SuppressWarnings({"FieldCanBeLocal"}) private EasyObservableList<BibDatabaseContext> openDatabaseList;
@@ -149,7 +148,6 @@ public class JabRefFrame extends BorderPane {
         this.pushToApplicationsManager = new PushToApplicationsManager(dialogService, stateManager, prefs);
         this.undoManager = Globals.undoManager;
         this.globalSearchBar = new GlobalSearchBar(this, stateManager, prefs, undoManager);
-        authorSearchBar = new AuthorSearchBar(this, stateManager,prefs, undoManager);
         this.fileHistory = new FileHistoryMenu(prefs, dialogService, getOpenDatabaseAction());
         this.taskExecutor = Globals.TASK_EXECUTOR;
         this.setOnKeyTyped(key -> {
@@ -214,9 +212,6 @@ public class JabRefFrame extends BorderPane {
                         break;
                     case SEARCH:
                         getGlobalSearchBar().focus();
-                        break;
-                    case SEARCH_AUTHOR:
-                        getAuthorSearchBar().focus();
                         break;
                     case NEW_ARTICLE:
                         new NewEntryAction(this, StandardEntryType.Article, dialogService, prefs, stateManager).execute();
@@ -462,15 +457,7 @@ public class JabRefFrame extends BorderPane {
                 leftSpacer,
 
                 globalSearchBar,
-                new Separator(Orientation.VERTICAL),
-                new HBox(
-                        factory.createIconButton(StandardActions.NEW_ARTICLE, new NewEntryAction(this, StandardEntryType.Article, dialogService, prefs, stateManager)),
-                        factory.createIconButton(StandardActions.NEW_ENTRY, new NewEntryAction(this, dialogService, prefs, stateManager)),
-                        createNewEntryFromIdButton(),
-                        factory.createIconButton(StandardActions.NEW_ENTRY_FROM_PLAIN_TEXT, new ExtractBibtexAction(dialogService, prefs, stateManager)),
-                        factory.createIconButton(StandardActions.DELETE_ENTRY, new EditAction(StandardActions.DELETE_ENTRY, this, stateManager))
-                ),
-                authorSearchBar,
+
 
                 rightSpacer,
                 new HBox(
@@ -481,6 +468,10 @@ public class JabRefFrame extends BorderPane {
                         factory.createIconButton(StandardActions.DELETE_ENTRY, new EditAction(StandardActions.DELETE_ENTRY, this, stateManager))
                 ),
 
+                new Separator(Orientation.VERTICAL),
+                /*new HBox(factory.createIconButton(StandardActions.NEW_SEARCH_AUTHOR, new )
+
+                ),*/
                 new Separator(Orientation.VERTICAL),
 
                 new HBox(
@@ -1244,9 +1235,7 @@ public class JabRefFrame extends BorderPane {
     public GlobalSearchBar getGlobalSearchBar() {
         return globalSearchBar;
     }
-    public AuthorSearchBar getAuthorSearchBar(){
-        return this.authorSearchBar;
-    }
+
 
     public CountingUndoManager getUndoManager() {
         return undoManager;

@@ -173,7 +173,8 @@ public class GlobalSearchBar extends HBox {
         regexValidator = new FunctionBasedValidator<>(
                 searchField.textProperty(),
                 query -> !(regularExpressionButton.isSelected() && !validRegex()),
-                ValidationMessage.error(Localization.lang("Invalid regular expression")));
+                ValidationMessage.error(Localization.lang("Invalid regular expression"))
+        );
         ControlsFxVisualizer visualizer = new ControlsFxVisualizer();
         visualizer.setDecoration(new IconValidationDecorator(Pos.CENTER_LEFT));
         Platform.runLater(() -> visualizer.initVisualization(regexValidator.getValidationStatus(), searchField));
