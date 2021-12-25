@@ -38,6 +38,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
+import org.controlsfx.control.textfield.TextFields;
 import org.jabref.gui.ClipBoardManager;
 import org.jabref.gui.Globals;
 import org.jabref.gui.JabRefFrame;
@@ -86,7 +87,7 @@ public class AuthorSearchBar extends HBox {
     private static final PseudoClass CLASS_NO_RESULTS = PseudoClass.getPseudoClass("emptyResult");
     private static final PseudoClass CLASS_RESULTS_FOUND = PseudoClass.getPseudoClass("emptyResult");
 
-    private final CustomTextField searchField = SearchTextField.create();
+    private final CustomTextField searchField ;
     private final ToggleButton caseSensitiveButton;
     private final ToggleButton regularExpressionButton;
     private final ToggleButton fulltextButton;
@@ -112,8 +113,11 @@ public class AuthorSearchBar extends HBox {
         this.preferencesService = preferencesService;
         this.searchPreferences = preferencesService.getSearchPreferences();
         this.undoManager = undoManager;
-
+        this.searchField = (CustomTextField) TextFields.createClearableTextField();
+        searchField.setPromptText(Localization.lang("Search Author") + "...");
+        searchField.setLeft(IconTheme.JabRefIcons.SEARCH.getGraphicNode());
         searchField.disableProperty().bind(needsDatabase(stateManager).not());
+
 
         // fits the standard "found x entries"-message thus hinders the searchbar to jump around while searching if the frame width is too small
         currentResults.setPrefWidth(150);

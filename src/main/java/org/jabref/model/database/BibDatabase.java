@@ -634,7 +634,4 @@ public class BibDatabase {
         return newLineSeparator;
     }
 
-    public Iterator<String> coAuthor(){
-        return new CoAuthorFilter(this.entries);
-    }
 }
