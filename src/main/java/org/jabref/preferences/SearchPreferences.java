@@ -79,6 +79,13 @@ public class SearchPreferences {
             searchFlags.add(flag);
         }
     }
+    public boolean isAuthorSearch(){
+        return searchFlags.contains(SearchFlags.AUTHOR_SEARCH);
+    }
+
+    public boolean isKeywordSearch(){
+        return searchFlags.contains(SearchFlags.KEYWORD_SEARCH);
+    };
 
     public boolean isRegularExpression() {
         return searchFlags.contains(SearchFlags.REGULAR_EXPRESSION);

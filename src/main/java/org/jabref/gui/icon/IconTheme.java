@@ -162,6 +162,8 @@ public class IconTheme {
         REFRESH(MaterialDesignR.REFRESH),
         DELETE_ENTRY(MaterialDesignD.DELETE),
         SEARCH(MaterialDesignM.MAGNIFY),
+        SEARCH_AUTHOR(MaterialDesignP.PENCIL_CIRCLE),
+        KEYWORD(MaterialDesignK.KEY_LINK),
         FILE_SEARCH(MaterialDesignF.FILE_FIND),
         ADVANCED_SEARCH(Color.CYAN, MaterialDesignM.MAGNIFY),
         PREFERENCES(MaterialDesignC.COG),
