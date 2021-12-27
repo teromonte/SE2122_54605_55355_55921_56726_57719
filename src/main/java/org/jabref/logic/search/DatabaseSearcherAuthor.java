@@ -1,6 +1,9 @@
 package org.jabref.logic.search;
 
+import org.jabref.logic.importer.AuthorListParser;
 import org.jabref.model.database.BibDatabase;
+import org.jabref.model.entry.Author;
+import org.jabref.model.entry.AuthorList;
 import org.jabref.model.entry.BibEntry;
 import org.jabref.model.entry.field.StandardField;
 import org.slf4j.Logger;
@@ -10,7 +13,7 @@ import java.util.*;
 
 public class DatabaseSearcherAuthor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseSearcherAuthor.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(DatabaseSearcherAuthor.class);
     private final SearchQuery query;
     private final BibDatabase database;
     private final List<BibEntry> entries;
@@ -30,7 +33,7 @@ public class DatabaseSearcherAuthor {
             else if(o1.getValue() < o2.getValue())
                 return 1;
             else
-                return o1.getKey().compareTo(o2.getKey());
+                return o2.getKey().compareTo(o1.getKey());
         }
     }
 
@@ -38,17 +41,23 @@ public class DatabaseSearcherAuthor {
      * se nao existir coAuthor passa a 1 se existir pega no int e o segundo argumento e faz sum
      * @return mapa ordenado dos co authores
      */
-    public Map<String, Integer> getMatches(){
-        Map<String,Integer> result = new TreeMap<>();
-        for(BibEntry e : entries){
-            Set<String> set = e.getFieldAsWords(StandardField.AUTHOR);
-            if(set.remove(query.getQuery())){
-                for(String coAuthor : set){
-                    result.merge(coAuthor, 1, Integer::sum);
+    public List<Map.Entry<String, Integer>> getMatches(){
+        Map<String,Integer> result = new TreeMap();
+        for (BibEntry e : entries) {
+            if (e.getFieldAsWords(StandardField.AUTHOR).contains(query.getQuery())) {
+                String set = e.getField(StandardField.AUTHOR).get();
+                AuthorList list;
+                list = AuthorListParser.parse(set);
+                for (Author coAuthor : list.getAuthors()) {
+                    if ()
+                        result.merge(coAuthor, 1, Integer::sum);
                 }
             }
+        
         }
-        result.entrySet().stream().sorted(new EntriesComparator()).forEach(System.out::println);
-        return result;
+        Comparator<Map.Entry<String, Integer>> c = new EntriesComparator();
+        List<Map.Entry<String, Integer>> resultList = new ArrayList<>(result.entrySet());
+        Collections.sort(resultList,c);
+        return resultList;
     }
 }
