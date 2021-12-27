@@ -69,9 +69,7 @@ import org.jabref.gui.preview.CopyCitationAction;
 import org.jabref.gui.push.PushToApplicationAction;
 import org.jabref.gui.push.PushToApplicationsManager;
 //import org.jabref.gui.search.AuthorSearchBar;
-import org.jabref.gui.search.AuthorSearchBar;
-import org.jabref.gui.search.GlobalSearchBar;
-import org.jabref.gui.search.RebuildFulltextSearchIndexAction;
+import org.jabref.gui.search.*;
 import org.jabref.gui.shared.ConnectToSharedDatabaseCommand;
 import org.jabref.gui.shared.PullChangesFromSharedAction;
 import org.jabref.gui.sidepane.SidePane;
@@ -94,6 +92,7 @@ import org.jabref.logic.importer.ImportCleanup;
 import org.jabref.logic.importer.ParserResult;
 import org.jabref.logic.importer.WebFetchers;
 import org.jabref.logic.l10n.Localization;
+import org.jabref.logic.search.DatabaseSearcherAuthor;
 import org.jabref.logic.shared.DatabaseLocation;
 import org.jabref.logic.undo.AddUndoableActionEvent;
 import org.jabref.logic.undo.UndoChangeEvent;
@@ -212,6 +211,8 @@ public class JabRefFrame extends BorderPane {
                         break;
                     case SEARCH:
                         getGlobalSearchBar().focus();
+                        break;
+                    case SEARCH_AUTHOR:
                         break;
                     case NEW_ARTICLE:
                         new NewEntryAction(this, StandardEntryType.Article, dialogService, prefs, stateManager).execute();
@@ -468,10 +469,6 @@ public class JabRefFrame extends BorderPane {
                         factory.createIconButton(StandardActions.DELETE_ENTRY, new EditAction(StandardActions.DELETE_ENTRY, this, stateManager))
                 ),
 
-                new Separator(Orientation.VERTICAL),
-                /*new HBox(factory.createIconButton(StandardActions.NEW_SEARCH_AUTHOR, new )
-
-                ),*/
                 new Separator(Orientation.VERTICAL),
 
                 new HBox(
@@ -745,10 +742,10 @@ public class JabRefFrame extends BorderPane {
                 factory.createMenuItem(StandardActions.EDIT_STRINGS, new BibtexStringEditorAction(stateManager)),
                 factory.createMenuItem(StandardActions.MANAGE_CITE_KEY_PATTERNS, new CitationKeyPatternAction(this, stateManager)),
 
-                new SeparatorMenuItem()
+                new SeparatorMenuItem(),
 
-                //factory.createMenuItem()
-
+                factory.createMenuItem(StandardActions.NEW_SEARCH_AUTHOR, new SearchAction(StandardActions.NEW_SEARCH_AUTHOR,this))
+                //factory.createMenuItem(StandardActions.SEARCH_KEYWORDS, new DatabaseSearcherAuthor(stateManager))
         );
 
         quality.getItems().addAll(

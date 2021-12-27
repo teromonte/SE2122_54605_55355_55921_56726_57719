@@ -69,7 +69,8 @@ public class SearchQuery implements SearchMatcher {
 
     @Override
     public String toString() {
-        return String.format("\"%s\" (%s, %s)", getQuery(), getCaseSensitiveDescription(), getRegularExpressionDescription());
+        return String.format("\"%s\" (%s, %s, %s, %s)", getQuery(), getCaseSensitiveDescription(),
+                    getRegularExpressionDescription(), getAuthorDescription(), getKeywordDescription());
     }
 
     @Override
@@ -100,7 +101,19 @@ public class SearchQuery implements SearchMatcher {
             return "plain text";
         }
     }
+    private String getAuthorDescription(){
+        if(searchFlags.contains(SearchRules.SearchFlags.AUTHOR_SEARCH))
+            return "author search";
+        else
+            return "normal search";
+    }
 
+    private String getKeywordDescription(){
+        if(searchFlags.contains(SearchRules.SearchFlags.KEYWORD_SEARCH))
+            return "Keyword search";
+        else
+            return "normal search";
+    }
     public String localize() {
         return String.format("\"%s\" (%s, %s)",
                 getQuery(),

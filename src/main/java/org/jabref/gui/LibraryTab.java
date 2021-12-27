@@ -9,10 +9,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.Tab;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import org.jabref.gui.autocompleter.AutoCompletePreferences;
 import org.jabref.gui.autocompleter.PersonNameSuggestionProvider;
@@ -22,6 +19,7 @@ import org.jabref.gui.collab.DatabaseChangePane;
 import org.jabref.gui.dialogs.AutosaveUiManager;
 import org.jabref.gui.entryeditor.EntryEditor;
 import org.jabref.gui.externalfiletype.ExternalFileTypes;
+import org.jabref.gui.icon.IconTheme;
 import org.jabref.gui.importer.actions.OpenDatabaseAction;
 import org.jabref.gui.maintable.MainTable;
 import org.jabref.gui.maintable.MainTableDataModel;
@@ -127,7 +125,7 @@ public class LibraryTab extends Tab {
         this.getDatabase().registerListener(new SearchListener());
         this.getDatabase().registerListener(new IndexUpdateListener());
         this.getDatabase().registerListener(new EntriesRemovedListener());
-        // this.getDatabase().registerListener(new newSearchListener());
+        this.getDatabase().registerListener(new newSearchListener());
 
         // ensure that at each addition of a new entry, the entry is added to the groups interface
         this.bibDatabaseContext.getDatabase().registerListener(new GroupTreeListener());
@@ -506,6 +504,11 @@ public class LibraryTab extends Tab {
             }
             changePane = null;
             this.setContent(splitPane);
+            ToggleButton authorSearchButton, keywordSearchButton ;
+            authorSearchButton = IconTheme.JabRefIcons.SEARCH_AUTHOR.asToggleButton();
+            keywordSearchButton =IconTheme.JabRefIcons.KEYWORD.asToggleButton();
+            this.setContent(authorSearchButton);
+            this.setContent(keywordSearchButton);
         }
     }
 
