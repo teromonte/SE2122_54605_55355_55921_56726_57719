@@ -44,16 +44,14 @@ public class DatabaseSearcherAuthor {
     public List<Map.Entry<String, Integer>> getMatches(){
         Map<String,Integer> result = new TreeMap();
         for (BibEntry e : entries) {
-            if (e.getFieldAsWords(StandardField.AUTHOR).contains(query.getQuery())) {
-                String set = e.getField(StandardField.AUTHOR).get();
-                AuthorList list;
-                list = AuthorListParser.parse(set);
-                for (Author coAuthor : list.getAuthors()) {
-                    if ()
-                        result.merge(coAuthor, 1, Integer::sum);
+            Set<String> authors = e.getFieldAsWords(StandardField.AUTHOR);
+            if (authors.contains(query.getQuery())) {
+                authors.remove(query.getQuery());
+                for (String coAuthor : authors) {
+                    result.merge(coAuthor, 1, Integer::sum);
                 }
             }
-        
+
         }
         Comparator<Map.Entry<String, Integer>> c = new EntriesComparator();
         List<Map.Entry<String, Integer>> resultList = new ArrayList<>(result.entrySet());
