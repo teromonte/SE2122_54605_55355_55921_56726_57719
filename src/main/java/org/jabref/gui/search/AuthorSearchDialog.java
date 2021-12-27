@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
 import javafx.util.Pair;
+import org.controlsfx.control.textfield.CustomTextField;
 import org.jabref.gui.DialogService;
 import org.jabref.gui.StateManager;
 import org.jabref.gui.preview.PreviewViewer;
@@ -27,9 +28,11 @@ public class AuthorSearchDialog extends BaseDialog<Void>  {
 
     private static final int MAX_ENTRIES = 10;
     private final BibDatabase database;
+    private final CustomTextField text = SearchTextField.create();
     @Inject private PreferencesService preferencesService;
     @Inject private StateManager stateManager;
     @Inject private DialogService dialogService;
+
 
     public AuthorSearchDialog(BibDatabase database){
         this.database = database;
