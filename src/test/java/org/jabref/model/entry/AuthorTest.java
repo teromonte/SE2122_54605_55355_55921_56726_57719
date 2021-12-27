@@ -5,6 +5,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
 import static org.jabref.model.entry.Author.compare;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -17,9 +20,9 @@ class AuthorTest {
         Author author3 = new Author("Thiago", "T.", "de", "Barcelona", "Jr.");
         Author author4 = new Author("Yulia", "Y.", "de", "Seville", "Jr.");
 
-        assertEquals(-1, compare(author1, author2));
-        assertEquals(0, compare(author3, author2));
-        assertEquals(1, compare(author4, author3));
+        assertThat("", -1, greaterThanOrEqualTo(compare(author1, author2)));
+        assertThat("", 0, equalTo(compare(author3, author2)));
+        assertThat("", 1, lessThanOrEqualTo(compare(author4, author3)));
 
 
     }

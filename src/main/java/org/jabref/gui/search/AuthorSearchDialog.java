@@ -60,7 +60,7 @@ public class AuthorSearchDialog extends BaseDialog<Void>  {
             table.getItems().add(new Pair(e.getKey(),e.getValue()));
             counter++;
         }
-        container.getItems().addAll(table,previewViewer);
+        //container.getItems().addAll(table,previewViewer);
 
 
     }
