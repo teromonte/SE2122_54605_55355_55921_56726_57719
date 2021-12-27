@@ -5,9 +5,24 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.jabref.model.entry.Author.compare;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AuthorTest {
+
+    @Test
+    void compareTest() {
+        Author author1 = new Author("Diogo", "D.", "de la", "Madrid", "Jr.");
+        Author author2 = new Author("Thiago", "T.", "de", "Barcelona", "Jr.");
+        Author author3 = new Author("Thiago", "T.", "de", "Barcelona", "Jr.");
+        Author author4 = new Author("Yulia", "Y.", "de", "Seville", "Jr.");
+
+        assertEquals(-1, compare(author1, author2));
+        assertEquals(0, compare(author3, author2));
+        assertEquals(1, compare(author4, author3));
+
+
+    }
 
     @Test
     void addDotIfAbbreviationAddDot() {
@@ -25,10 +40,10 @@ class AuthorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"O.", "A. O.", "A.-O.",
-                            "O. Moore", "A. O. Moore", "O. von Moore", "A.-O. Moore",
-                            "Moore, O.", "Moore, O., Jr.", "Moore, A. O.", "Moore, A.-O.",
-                            "MEmre", "{\\'{E}}douard", "J{\\\"o}rg", "Moore, O. and O. Moore",
-                            "Moore, O. and O. Moore and Moore, O. O."})
+            "O. Moore", "A. O. Moore", "O. von Moore", "A.-O. Moore",
+            "Moore, O.", "Moore, O., Jr.", "Moore, A. O.", "Moore, A.-O.",
+            "MEmre", "{\\'{E}}douard", "J{\\\"o}rg", "Moore, O. and O. Moore",
+            "Moore, O. and O. Moore and Moore, O. O."})
     void addDotIfAbbreviationDoNotAddDot(String input) {
         assertEquals(input, Author.addDotIfAbbreviation(input));
     }

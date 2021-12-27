@@ -34,12 +34,11 @@ public class Author {
         lastPart = removeStartAndEndBraces(last);
         jrPart = removeStartAndEndBraces(jr);
 
-        Comparator<Author> authorComparator = new Comparator<Author>() {
-            public int compare(Author o1, Author o2) {
-                return o1.getFirst().toString().compareTo(o2.getFirst().toString());
-            }
-        };
 
+    }
+
+    public static int compare(Author o1, Author o2) {
+        return o1.getFirst().toString().compareTo(o2.getFirst().toString());
     }
 
     public static String addDotIfAbbreviation(String name) {
