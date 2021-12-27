@@ -744,7 +744,7 @@ public class JabRefFrame extends BorderPane {
 
                 new SeparatorMenuItem(),
 
-                factory.createMenuItem(StandardActions.NEW_SEARCH_AUTHOR, new SearchAction(StandardActions.NEW_SEARCH_AUTHOR,this))
+                factory.createMenuItem(StandardActions.NEW_SEARCH_AUTHOR, new SearchAction(StandardActions.NEW_SEARCH_AUTHOR, this,stateManager,this.prefs))
                 //factory.createMenuItem(StandardActions.SEARCH_KEYWORDS, new DatabaseSearcherAuthor(stateManager))
         );
 
