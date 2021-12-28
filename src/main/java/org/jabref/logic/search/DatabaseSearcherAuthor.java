@@ -13,6 +13,7 @@ import java.util.*;
 
 public class DatabaseSearcherAuthor {
 
+    private final static String AND = "and";
     private final Logger LOGGER = LoggerFactory.getLogger(DatabaseSearcherAuthor.class);
     private final SearchQuery query;
     private final BibDatabase database;
@@ -42,16 +43,21 @@ public class DatabaseSearcherAuthor {
      * @return mapa ordenado dos co authores
      */
     public List<Map.Entry<String, Integer>> getMatches(){
-        Map<String,Integer> result = new TreeMap();
-        for (BibEntry e : entries) {
-            Set<String> authors = e.getFieldAsWords(StandardField.AUTHOR);
-            if (authors.contains(query.getQuery())) {
-                authors.remove(query.getQuery());
-                for (String coAuthor : authors) {
-                    result.merge(coAuthor, 1, Integer::sum);
+        Map<String,Integer> result = new HashMap<>();
+        for(BibEntry e : entries){
+            if(e.getFieldAsWords(StandardField.AUTHOR).contains(query.getQuery())) {
+                String[] authorsTitleYear = e.getAuthorTitleYear(0).split(":");
+                String[] authors = authorsTitleYear[0].split(" ");
+
+
+                for (String author : authors) {
+                    System.out.println(author);
+                    boolean noAnd = !author.contains(AND);
+                    if (!author.equals(query.getQuery()) && !author.contains(",") && noAnd) {
+                        result.merge(author,1,Integer::sum);
+                    }
                 }
             }
-
         }
         Comparator<Map.Entry<String, Integer>> c = new EntriesComparator();
         List<Map.Entry<String, Integer>> resultList = new ArrayList<>(result.entrySet());

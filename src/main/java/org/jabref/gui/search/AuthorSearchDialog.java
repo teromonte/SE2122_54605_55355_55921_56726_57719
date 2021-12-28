@@ -28,18 +28,11 @@ public class AuthorSearchDialog {
 
     private static final int MAX_ENTRIES = 10;
     private final BibDatabase database;
-    private PreferencesService preferencesService;
-    private StateManager stateManager;
-    private DialogService dialogService;
 
 
-
-
-    public AuthorSearchDialog(BibDatabase database, JabRefFrame frame, StateManager state, PreferencesService pref){
+    public AuthorSearchDialog(BibDatabase database){
         this.database = database;
-        this.dialogService = frame.getDialogService();
-        this.stateManager = state;
-        this.preferencesService =pref;
+
 
     }
 

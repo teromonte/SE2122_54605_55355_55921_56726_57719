@@ -16,14 +16,12 @@ public class SearchAction extends SimpleCommand {
 
     private final StandardActions action;
     private final JabRefFrame frame;
-    private final StateManager state;
-    private final PreferencesService pref;
 
-    public SearchAction(StandardActions action, JabRefFrame frame, StateManager stateManager, PreferencesService pref){
+
+    public SearchAction(StandardActions action, JabRefFrame frame){
         this.action = action;
         this.frame = frame;
-        this.state = stateManager;
-        this.pref = pref;
+
     }
 
     @Override
@@ -35,10 +33,12 @@ public class SearchAction extends SimpleCommand {
     public void execute() {
         if(action == StandardActions.NEW_SEARCH_AUTHOR){
             BibDatabase database = frame.getCurrentLibraryTab().getDatabase();
-            AuthorSearchDialog authorSearch = new AuthorSearchDialog(database,frame,state,pref);
+            AuthorSearchDialog authorSearch = new AuthorSearchDialog(database);
             authorSearch.display();
-
-
+        } else if(action == StandardActions.SEARCH_KEYWORDS){
+            BibDatabase database = frame.getCurrentLibraryTab().getDatabase();
+            KeywordSearchDialog keywordSearch = new KeywordSearchDialog(database);
+            keywordSearch.display();
         }
     }
 }
