@@ -212,8 +212,6 @@ public class JabRefFrame extends BorderPane {
                     case SEARCH:
                         getGlobalSearchBar().focus();
                         break;
-                    case SEARCH_AUTHOR:
-                        break;
                     case NEW_ARTICLE:
                         new NewEntryAction(this, StandardEntryType.Article, dialogService, prefs, stateManager).execute();
                         break;

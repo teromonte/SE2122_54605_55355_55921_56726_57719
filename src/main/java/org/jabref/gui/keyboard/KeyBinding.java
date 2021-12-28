@@ -99,6 +99,7 @@ public enum KeyBinding {
 
     SEARCH("Search", Localization.lang("Search"), "ctrl+F", KeyBindingCategory.SEARCH),
 
+    SEARCH_KEYWORDS("Search Keywords",Localization.lang("Search Keywords"),"ctrl+alt+shift+k",KeyBindingCategory.SEARCH),
     SEARCH_AUTHOR("Search Author",Localization.lang("Search Author"),"ctrl+alt+shift+s",KeyBindingCategory.SEARCH),
 
     SELECT_ALL("Select all", Localization.lang("Select all"), "ctrl+A", KeyBindingCategory.EDIT),

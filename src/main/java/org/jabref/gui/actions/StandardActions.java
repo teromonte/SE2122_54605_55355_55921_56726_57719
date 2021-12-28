@@ -126,7 +126,7 @@ public enum StandardActions implements Action {
     COLLAPSE_ALL(Localization.lang("Collapse all")),
 
 
-    SEARCH_KEYWORDS(Localization.lang("New search keywords"),IconTheme.JabRefIcons.KEYWORD),
+    SEARCH_KEYWORDS(Localization.lang("New search keywords"),IconTheme.JabRefIcons.KEYWORD, KeyBinding.SEARCH_KEYWORDS),
     NEW_SEARCH_AUTHOR(Localization.lang("New search author"), IconTheme.JabRefIcons.SEARCH_AUTHOR, KeyBinding.SEARCH_AUTHOR),
 
     NEW_ENTRY(Localization.lang("New entry"), IconTheme.JabRefIcons.ADD_ENTRY, KeyBinding.NEW_ENTRY),

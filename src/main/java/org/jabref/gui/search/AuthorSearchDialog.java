@@ -46,7 +46,7 @@ public class AuthorSearchDialog {
         TableView<Pair> table = new TableView<Pair>();
         table.setEditable(false);
         TableColumn<Pair, String> firstCol = new TableColumn<>("Name");
-        TableColumn<Pair, String> timesCol = new TableColumn<>("Number of Papers");
+        TableColumn<Pair, Integer> timesCol = new TableColumn<>("Number of Papers");
         firstCol.setCellValueFactory(new PropertyValueFactory<>("Key"));
         timesCol.setCellValueFactory(new PropertyValueFactory<>("Value"));
 
