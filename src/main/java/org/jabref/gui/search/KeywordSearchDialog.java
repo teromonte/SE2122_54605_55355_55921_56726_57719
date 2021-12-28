@@ -43,7 +43,7 @@ public class KeywordSearchDialog {
         table.setEditable(false);
         TableColumn<EntriesKeyWordClass, String> firstCol = new TableColumn<>("Name");
         TableColumn<EntriesKeyWordClass, Integer> timesCol = new TableColumn<>("Number of Papers");
-        TableColumn<EntriesKeyWordClass, String> papersCol = new TableColumn<>("Titles of Papers");
+        TableColumn<EntriesKeyWordClass, List<String>> papersCol = new TableColumn<>("Titles of Papers");
 
 
         firstCol.setCellValueFactory(new PropertyValueFactory<>("Author"));
@@ -59,13 +59,12 @@ public class KeywordSearchDialog {
             if(newQuery.getQuery() != null) {
                 int counter = 0;
                 DatabaseSearcherKeyword searcherKeyword = new DatabaseSearcherKeyword(newQuery,database);
-                searcherKeyword.doMatches();
                 Iterator<Map.Entry<String, Integer>> numbers = searcherKeyword.getResultNumber().iterator();
                 Map<String,List<String>> titles = searcherKeyword.getResultList();
                 while (numbers.hasNext() && counter < MAX_ENTRIES) {
                     Map.Entry<String, Integer> entry = numbers.next();
                     List<String> paperTitles = titles.get(entry.getKey());
-                    table.getItems().add(new EntriesKeyWordClass(entry.getKey(), entry.getValue(), paperTitles));
+                    table.getItems().add(new EntriesKeyWordClass(entry.getKey(), entry.getValue(),paperTitles));
                     counter++;
                 }
             }
@@ -73,7 +72,7 @@ public class KeywordSearchDialog {
 
         Button button2= new Button("Close");
         button2.setOnAction(e -> popUpWindow.close());
-        button2.setGraphic(IconTheme.JabRefIcons.CLOSE.getGraphicNode());
+
         VBox layout= new VBox(10);
 
         layout.getChildren().addAll(text, button1,table,button2);
@@ -86,16 +85,16 @@ public class KeywordSearchDialog {
         popUpWindow.showAndWait();
     }
 
-    public static class EntriesKeyWordClass {
+    public class EntriesKeyWordClass {
         private SimpleStringProperty author;
         private SimpleIntegerProperty number;
-        private SimpleStringProperty papers;
+        private SimpleListProperty papers;
 
 
         public EntriesKeyWordClass(String author, int number, List<String> papers) {
             this.author = new SimpleStringProperty(author);
             this.number = new SimpleIntegerProperty(number);
-            this.papers = new SimpleStringProperty(papers.toString());
+            this.papers = new SimpleListProperty(FXCollections.observableList(papers));
         }
 
         public String getAuthor() {
@@ -107,7 +106,7 @@ public class KeywordSearchDialog {
             return number.get();
         }
 
-        public String getPapers() {
+        public ObservableList getPapers() {
             return papers.get();
         }
     }
