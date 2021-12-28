@@ -22,6 +22,7 @@ public class DatabaseSearcherKeyword {
         this.entries = database.getEntries();
         resultNumber = new TreeMap<>();
         resultTitles = new TreeMap<>();
+        makeMatches();
     }
 
     private static class EntriesComparator implements Comparator<Map.Entry<String, Integer>> {
@@ -37,7 +38,7 @@ public class DatabaseSearcherKeyword {
         }
     }
 
-    public void getMatches(){
+    private void makeMatches(){
         for (BibEntry e : entries) {
             Set<String> keys = e.getFieldAsWords(StandardField.KEYWORDS);
 

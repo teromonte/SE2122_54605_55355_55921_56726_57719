@@ -59,7 +59,6 @@ public class KeywordSearchDialog {
             if(newQuery.getQuery() != null) {
                 int counter = 0;
                 DatabaseSearcherKeyword searcherKeyword = new DatabaseSearcherKeyword(newQuery,database);
-                searcherKeyword.getMatches();
                 Iterator<Map.Entry<String, Integer>> numbers = searcherKeyword.getResultNumber().iterator();
                 Map<String,List<String>> titles = searcherKeyword.getResultList();
                 while (numbers.hasNext() && counter < MAX_ENTRIES) {
