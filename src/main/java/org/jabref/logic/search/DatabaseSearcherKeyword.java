@@ -37,7 +37,7 @@ public class DatabaseSearcherKeyword {
         }
     }
 
-    public void getMatches(){
+    public void doMatches(){
         for (BibEntry e : entries) {
             Set<String> keys = e.getFieldAsWords(StandardField.KEYWORDS);
 
