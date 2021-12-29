@@ -1,5 +1,6 @@
 package org.jabref.logic.search;
 
+import org.jabref.logic.formatter.bibtexfields.NormalizeNamesFormatter;
 import org.jabref.logic.importer.AuthorListParser;
 import org.jabref.model.database.BibDatabase;
 import org.jabref.model.entry.Author;
@@ -46,12 +47,14 @@ public class DatabaseSearcherAuthor {
         Map<String,Integer> result = new HashMap<>();
         for(BibEntry e : entries){
             if(e.getFieldAsWords(StandardField.AUTHOR).contains(query.getQuery())) {
-                String[] authorsTitleYear = e.getAuthorTitleYear(0).split(":");
-                String[] authors = authorsTitleYear[0].split(" ");
+                /*String[] authorsTitleYear = e.getAuthorTitleYear(0).split(":");
+                String[] authors = authorsTitleYear[0].split(" ");*/
+                AuthorList al = AuthorList.parse(e.getField(StandardField.AUTHOR).get());
+                String[] authorListParsed = al.getAsFirstLastNamesWithAnd().split(AND);
 
-
-                for (String author : authors) {
+                for (String author : authorListParsed) {
                     System.out.println(author);
+                    System.out.println();
                     boolean noAnd = !author.contains(AND);
                     if (!author.equals(query.getQuery()) && !author.contains(",") && noAnd) {
                         result.merge(author,1,Integer::sum);
