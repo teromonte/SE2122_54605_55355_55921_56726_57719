@@ -92,9 +92,6 @@ public class GlobalSearchBar extends HBox {
     private final ToggleButton fulltextButton;
     private final Button openGlobalSearchButton;
     private final ToggleButton keepSearchString;
-    /*private final ToggleButton authorSearchButton;
-    private final ToggleButton keywordSearchButton;*/
-    // private final Button searchModeButton;
     private final Tooltip searchFieldTooltip = new Tooltip();
     private final Label currentResults = new Label("");
 
@@ -145,8 +142,7 @@ public class GlobalSearchBar extends HBox {
         fulltextButton = IconTheme.JabRefIcons.FULLTEXT.asToggleButton();
         openGlobalSearchButton = IconTheme.JabRefIcons.OPEN_GLOBAL_SEARCH.asButton();
         keepSearchString = IconTheme.JabRefIcons.KEEP_SEARCH_STRING.asToggleButton();
-        /*authorSearchButton = IconTheme.JabRefIcons.SEARCH_AUTHOR.asToggleButton();
-        keywordSearchButton =IconTheme.JabRefIcons.KEYWORD.asToggleButton() ;*/
+
         initSearchModifierButtons();
 
         BooleanBinding focusedOrActive = searchField.focusedProperty()
@@ -164,10 +160,7 @@ public class GlobalSearchBar extends HBox {
         fulltextButton.visibleProperty().bind(focusedOrActive);
         keepSearchString.visibleProperty().unbind();
         keepSearchString.visibleProperty().bind(focusedOrActive);
-       /* authorSearchButton.visibleProperty().unbind();
-        authorSearchButton.visibleProperty().bind(focusedOrActive);
-        keywordSearchButton.visibleProperty().unbind();
-        keywordSearchButton.visibleProperty().bind(focusedOrActive);*/
+
 
         StackPane modifierButtons = new StackPane(new HBox(regularExpressionButton
                 , caseSensitiveButton, fulltextButton, keepSearchString));
@@ -241,20 +234,6 @@ public class GlobalSearchBar extends HBox {
             searchPreferences.setSearchFlag(SearchRules.SearchFlags.KEEP_SEARCH_STRING, keepSearchString.isSelected());
             performSearch();
         });
-      /*  authorSearchButton.setSelected(searchPreferences.isAuthorSearch());
-        authorSearchButton.setTooltip(new Tooltip(Localization.lang("Author search")));
-        initSearchModifierButton(authorSearchButton);
-        authorSearchButton.setOnAction(event -> {
-            searchPreferences.setSearchFlag(SearchRules.SearchFlags.AUTHOR_SEARCH,authorSearchButton.isSelected());
-        });*/
-
-       /* keywordSearchButton.setSelected(searchPreferences.isKeywordSearch());
-        keywordSearchButton.setTooltip(new Tooltip(Localization.lang("Keyword search")));
-        initSearchModifierButton(keywordSearchButton);
-        keywordSearchButton.setOnAction(event -> {
-            searchPreferences.setSearchFlag(SearchRules.SearchFlags.KEYWORD_SEARCH,keywordSearchButton.isSelected());
-        });*/
-
         openGlobalSearchButton.disableProperty().bindBidirectional(globalSearchActive);
         openGlobalSearchButton.setTooltip(new Tooltip(Localization.lang("Search across libraries in a new window")));
         initSearchModifierButton(openGlobalSearchButton);
