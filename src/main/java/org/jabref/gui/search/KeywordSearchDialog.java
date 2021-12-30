@@ -19,7 +19,9 @@ import org.jabref.logic.l10n.Localization;
 import org.jabref.logic.search.DatabaseSearcherKeyword;
 import org.jabref.logic.search.SearchQuery;
 import org.jabref.model.database.BibDatabase;
+import org.jabref.model.search.rules.SearchRules;
 
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +30,7 @@ public class KeywordSearchDialog {
 
     private static final int MAX_ENTRIES = 10;
     private final BibDatabase database;
+    private static final EnumSet<SearchRules.SearchFlags> flags = EnumSet.of(SearchRules.SearchFlags.KEYWORD_SEARCH);
 
     public KeywordSearchDialog(BibDatabase database){
         this.database = database;
@@ -48,12 +51,12 @@ public class KeywordSearchDialog {
         String genericDescriptionTexts = Localization.lang( "Hint:\n\n Search for a keyword used in Keyword parameters");
         hintTooltip.getChildren().setAll(TooltipTextUtil.createTextsFromHtml(genericDescriptionTexts));
         textTip.setGraphic(hintTooltip);
+
         TableView<EntriesKeyWordClass> table = new TableView<>();
         table.setEditable(false);
         TableColumn<EntriesKeyWordClass, String> firstCol = new TableColumn<>("Name");
         TableColumn<EntriesKeyWordClass, Integer> timesCol = new TableColumn<>("Number of Papers");
         TableColumn<EntriesKeyWordClass, List<String>> papersCol = new TableColumn<>("Titles of Papers");
-
 
         firstCol.setCellValueFactory(new PropertyValueFactory<>("Author"));
         timesCol.setCellValueFactory(new PropertyValueFactory<>("Number"));
@@ -61,10 +64,13 @@ public class KeywordSearchDialog {
         table.getColumns().add(firstCol);
         table.getColumns().add(timesCol);
         table.getColumns().add(papersCol);
+
         Button button1 = new Button("Search Keyword");
         button1.setGraphic(IconTheme.JabRefIcons.KEYWORD.getGraphicNode());
         button1.setOnAction(e-> {
-            SearchQuery newQuery = new SearchQuery(text.getText(), null);
+            ObservableList<EntriesKeyWordClass> list = table.getItems();
+            table.getItems().removeAll(list);
+            SearchQuery newQuery = new SearchQuery(text.getText().trim(), flags);
             if(newQuery.getQuery() != null) {
                 int counter = 0;
                 DatabaseSearcherKeyword searcherKeyword = new DatabaseSearcherKeyword(newQuery,database);
@@ -73,7 +79,7 @@ public class KeywordSearchDialog {
                 while (numbers.hasNext() && counter < MAX_ENTRIES) {
                     Map.Entry<String, Integer> entry = numbers.next();
                     List<String> paperTitles = titles.get(entry.getKey());
-                    table.getItems().add(new EntriesKeyWordClass(entry.getKey(), entry.getValue(),paperTitles));
+                    table.getItems().add(new EntriesKeyWordClass(entry.getKey(), entry.getValue(), paperTitles));
                     counter++;
                 }
             }

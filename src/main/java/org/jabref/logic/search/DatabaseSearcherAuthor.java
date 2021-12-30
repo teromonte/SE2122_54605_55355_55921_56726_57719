@@ -47,17 +47,12 @@ public class DatabaseSearcherAuthor {
         Map<String,Integer> result = new HashMap<>();
         for(BibEntry e : entries){
             if(e.getFieldAsWords(StandardField.AUTHOR).contains(query.getQuery())) {
-                /*String[] authorsTitleYear = e.getAuthorTitleYear(0).split(":");
-                String[] authors = authorsTitleYear[0].split(" ");*/
                 AuthorList al = AuthorList.parse(e.getField(StandardField.AUTHOR).get());
                 String[] authorListParsed = al.getAsFirstLastNamesWithAnd().split(AND);
-
                 for (String author : authorListParsed) {
                     System.out.println(author);
-                    System.out.println();
-                    boolean noAnd = !author.contains(AND);
-                    if (!author.equals(query.getQuery()) && !author.contains(",") && noAnd) {
-                        result.merge(author,1,Integer::sum);
+                    if (!author.contains(query.getQuery())) {
+                        result.merge(author.trim(),1,Integer::sum);
                     }
                 }
             }

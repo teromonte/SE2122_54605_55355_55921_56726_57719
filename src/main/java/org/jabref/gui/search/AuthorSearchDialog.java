@@ -3,6 +3,7 @@ package org.jabref.gui.search;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -10,18 +11,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.jabref.gui.DialogService;
-import org.jabref.gui.JabRefFrame;
-import org.jabref.gui.StateManager;
 import org.jabref.gui.icon.IconTheme;
 import org.jabref.gui.util.TooltipTextUtil;
 import org.jabref.logic.l10n.Localization;
 import org.jabref.logic.search.DatabaseSearcherAuthor;
 import org.jabref.logic.search.SearchQuery;
 import org.jabref.model.database.BibDatabase;
-import org.jabref.preferences.PreferencesService;
 
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.jabref.model.search.rules.SearchRules;
+
+import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -31,10 +31,12 @@ public class AuthorSearchDialog {
 
     private static final int MAX_ENTRIES = 10;
     private final BibDatabase database;
+    private static final EnumSet<SearchRules.SearchFlags> flags = EnumSet.of(SearchRules.SearchFlags.AUTHOR_SEARCH);
 
 
     public AuthorSearchDialog(BibDatabase database){
         this.database = database;
+
 
 
     }
@@ -55,6 +57,7 @@ public class AuthorSearchDialog {
         String genericDescriptionTexts = Localization.lang( "Hint:\n\n Only search for author first name or author first and last name");
         hintTooltip.getChildren().setAll(TooltipTextUtil.createTextsFromHtml(genericDescriptionTexts));
         textTip.setGraphic(hintTooltip);
+
         TableView<Pair> table = new TableView<Pair>();
         table.setEditable(false);
         TableColumn<Pair, String> firstCol = new TableColumn<>("Name");
@@ -68,7 +71,9 @@ public class AuthorSearchDialog {
         Button button1 = new Button("Search Author");
         button1.setGraphic(IconTheme.JabRefIcons.SEARCH_AUTHOR.getGraphicNode());
         button1.setOnAction(e-> {
-            SearchQuery newQuery = new SearchQuery(text.getText(), null);
+            ObservableList<Pair> list = table.getItems();
+            table.getItems().removeAll(list);
+            SearchQuery newQuery = new SearchQuery(text.getText(), flags);
             if(newQuery.getQuery() != null) {
                 int counter = 0;
                 DatabaseSearcherAuthor searcherAuthor = new DatabaseSearcherAuthor(newQuery,database);
