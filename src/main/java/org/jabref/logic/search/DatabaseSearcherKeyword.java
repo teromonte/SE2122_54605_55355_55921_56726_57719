@@ -1,6 +1,7 @@
 package org.jabref.logic.search;
 
 import org.jabref.model.database.BibDatabase;
+import org.jabref.model.entry.AuthorList;
 import org.jabref.model.entry.BibEntry;
 import org.jabref.model.entry.field.StandardField;
 import org.slf4j.Logger;
@@ -43,15 +44,15 @@ public class DatabaseSearcherKeyword {
             Set<String> keys = e.getFieldAsWords(StandardField.KEYWORDS);
 
             if (keys.contains(query.getQuery())) {
-                String[] authorsTitleYear = e.getAuthorTitleYear(0).split(":");
-                String[] authors = authorsTitleYear[0].split(" ");
-                for (String author : authors) {
-                    boolean noAnd = !author.contains(AND);
-                    if (!author.equals(query.getQuery()) && !author.contains(",") && noAnd) {
-                        resultNumber.merge(author,1,Integer::sum);
-                        List<String> titles = resultTitles.computeIfAbsent(author, k -> new LinkedList<>());
-                        titles.add(e.getTitle().get());
-
+                AuthorList al = AuthorList.parse(e.getField(StandardField.AUTHOR).get());
+                String[] authorListParsed = al.getAsFirstLastNamesWithAnd().split(AND);
+                for (String author : authorListParsed) {
+                    if (!author.contentEquals(query.getQuery()) ) {
+                        resultNumber.merge(author.trim(),1,Integer::sum);
+                        if(e.hasField(StandardField.TITLE)) {
+                            List<String> titles = resultTitles.computeIfAbsent(author.trim(), k -> new LinkedList<>());
+                            titles.add(e.getTitle().get());
+                        }
                     }
                 }
             }
