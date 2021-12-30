@@ -49,9 +49,10 @@ public class DatabaseSearcherKeyword {
                 for (String author : authorListParsed) {
                     if (!author.contentEquals(query.getQuery()) ) {
                         resultNumber.merge(author.trim(),1,Integer::sum);
-                        List<String> titles = resultTitles.computeIfAbsent(author.trim(), k -> new LinkedList<>());
-                        titles.add(e.getTitle().get());
-
+                        if(e.hasField(StandardField.TITLE)) {
+                            List<String> titles = resultTitles.computeIfAbsent(author.trim(), k -> new LinkedList<>());
+                            titles.add(e.getTitle().get());
+                        }
                     }
                 }
             }

@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class DatabaseSearcherAuthorTest {
 
-    public static final SearchQuery INVALID_SEARCH_QUERY = new SearchQuery("\\asd123{}asdf", null);
+    public static final SearchQuery INVALID_SEARCH_QUERY = new SearchQuery("\\asd123{}asdf", EnumSet.of(SearchRules.SearchFlags.CASE_SENSITIVE, SearchRules.SearchFlags.REGULAR_EXPRESSION));
 
     private BibDatabase database;
 
@@ -27,7 +27,7 @@ public class DatabaseSearcherAuthorTest {
 
     @Test
     public void testNoMatchesFromEmptyDatabase() {
-        List<Map.Entry<String, Integer>> matches = new DatabaseSearcherAuthor(new SearchQuery("whatever", null), database).getMatches();
+        List<Map.Entry<String, Integer>> matches = new DatabaseSearcherAuthor(new SearchQuery("whatever", EnumSet.of(SearchRules.SearchFlags.CASE_SENSITIVE, SearchRules.SearchFlags.REGULAR_EXPRESSION)), database).getMatches();
         assertEquals(Collections.emptyList(), matches);
     }
 
@@ -40,7 +40,7 @@ public class DatabaseSearcherAuthorTest {
     @Test
     public void testGetDatabaseFromMatchesDatabaseWithEmptyEntries() {
         database.insertEntry(new BibEntry());
-        List<Map.Entry<String, Integer>> matches = new DatabaseSearcherAuthor(new SearchQuery("whatever", null), database).getMatches();
+        List<Map.Entry<String, Integer>> matches = new DatabaseSearcherAuthor(new SearchQuery("whatever", EnumSet.of(SearchRules.SearchFlags.CASE_SENSITIVE, SearchRules.SearchFlags.REGULAR_EXPRESSION)), database).getMatches();
         assertEquals(Collections.emptyList(), matches);
     }
 
@@ -49,13 +49,13 @@ public class DatabaseSearcherAuthorTest {
         BibEntry entry = new BibEntry(StandardEntryType.Article);
         entry.setField(StandardField.AUTHOR, "harrer");
         database.insertEntry(entry);
-        List<Map.Entry<String, Integer>> matches = new DatabaseSearcherAuthor(new SearchQuery("whatever", null), database).getMatches();
+        List<Map.Entry<String, Integer>> matches = new DatabaseSearcherAuthor(new SearchQuery("whatever", EnumSet.of(SearchRules.SearchFlags.CASE_SENSITIVE, SearchRules.SearchFlags.REGULAR_EXPRESSION)), database).getMatches();
         assertEquals(Collections.emptyList(), matches);
     }
 
     @Test
     public void testNoMatchesFromEmptyDatabaseWithInvalidQuery() {
-        SearchQuery query = new SearchQuery("asdf[", null);
+        SearchQuery query = new SearchQuery("asdf[", EnumSet.of(SearchRules.SearchFlags.CASE_SENSITIVE, SearchRules.SearchFlags.REGULAR_EXPRESSION));
 
         DatabaseSearcherAuthor databaseSearcherAuthor = new DatabaseSearcherAuthor(query, database);
 
@@ -68,7 +68,7 @@ public class DatabaseSearcherAuthorTest {
         entry.setField(StandardField.AUTHOR, "tonho, idk and yuliia");
         database.insertEntry(entry);
 
-        SearchQuery query = new SearchQuery("asdf", null);
+        SearchQuery query = new SearchQuery("asdf", EnumSet.of(SearchRules.SearchFlags.CASE_SENSITIVE, SearchRules.SearchFlags.REGULAR_EXPRESSION));
         DatabaseSearcherAuthor databaseSearcherAuthor = new DatabaseSearcherAuthor(query, database);
 
         assertEquals(Collections.emptyList(), databaseSearcherAuthor.getMatches());
@@ -79,7 +79,7 @@ public class DatabaseSearcherAuthorTest {
         BibEntry entry = new BibEntry();
         database.insertEntry(entry);
 
-        SearchQuery query = new SearchQuery("tonho", null);
+        SearchQuery query = new SearchQuery("tonho", EnumSet.of(SearchRules.SearchFlags.CASE_SENSITIVE, SearchRules.SearchFlags.REGULAR_EXPRESSION));
         DatabaseSearcherAuthor databaseSearcherAuthor = new DatabaseSearcherAuthor(query, database);
 
         assertEquals(Collections.emptyList(), databaseSearcherAuthor.getMatches());
@@ -90,9 +90,10 @@ public class DatabaseSearcherAuthorTest {
         BibEntry entry = new BibEntry(StandardEntryType.Article);
         entry.setField(StandardField.AUTHOR, "Ye, Diogo and Vieira, Tiago");
         database.insertEntry(entry);
-        List<Map.Entry<String, Integer>> matches = new DatabaseSearcherAuthor(new SearchQuery("Diogo", null), database).getMatches();
+        List<Map.Entry<String, Integer>> matches = new DatabaseSearcherAuthor(new SearchQuery("Diogo", EnumSet.of(SearchRules.SearchFlags.CASE_SENSITIVE, SearchRules.SearchFlags.REGULAR_EXPRESSION)), database).getMatches();
         Iterator<Map.Entry<String, Integer>> it = matches.iterator();
-        assertEquals(Collections.emptyList(), matches);
+        assertEquals("Tiago Vieira", it.next().getKey());
+        assertFalse(it.hasNext());
     }
 
     @Test
@@ -100,10 +101,8 @@ public class DatabaseSearcherAuthorTest {
         BibEntry entry = new BibEntry(StandardEntryType.Article);
         entry.setField(StandardField.AUTHOR, "Ye, Diogo");
         database.insertEntry(entry);
-        List<Map.Entry<String, Integer>> matches = new DatabaseSearcherAuthor(new SearchQuery("Diogo", null), database).getMatches();
-        Iterator<Map.Entry<String, Integer>> it = matches.iterator();
-        assertEquals("Tiago", it.next().getKey());
-        assertFalse(it.hasNext());
+        List<Map.Entry<String, Integer>> matches = new DatabaseSearcherAuthor(new SearchQuery("Diogo", EnumSet.of(SearchRules.SearchFlags.CASE_SENSITIVE, SearchRules.SearchFlags.REGULAR_EXPRESSION)), database).getMatches();
+        assertEquals(Collections.emptyList(), matches);
     }
 
     @Test
@@ -133,11 +132,11 @@ public class DatabaseSearcherAuthorTest {
         database.insertEntry(entry4);
         database.insertEntry(entry5);
 
-        List<Map.Entry<String, Integer>> matches = new DatabaseSearcherAuthor(new SearchQuery("Diogo", null), database).getMatches();
+        List<Map.Entry<String, Integer>> matches = new DatabaseSearcherAuthor(new SearchQuery("Diogo", EnumSet.of(SearchRules.SearchFlags.CASE_SENSITIVE, SearchRules.SearchFlags.REGULAR_EXPRESSION)), database).getMatches();
         Iterator<Map.Entry<String, Integer>> it = matches.iterator();
-        assertEquals("Tiago", it.next().getKey());
-        assertEquals("Thiago", it.next().getKey());
-        assertEquals("Pedro", it.next().getKey());
+        assertEquals("Tiago Vieira", it.next().getKey());
+        assertEquals("Thiago Monteiro", it.next().getKey());
+        assertEquals("Pedro Ribeiro", it.next().getKey());
         assertFalse(it.hasNext());
     }
 }
